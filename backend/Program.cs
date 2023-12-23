@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 // Read config for postgres
 var postgresConfig =
-    builder.Configuration.GetSection("Postgres").Get<PostgresSettings>() ?? throw new Exception("Missing Prostgres configuration");
+    builder.Configuration.GetSection("Postgres").Get<PostgresSettings>() ?? throw new Exception("Missing Postgres configuration");
 
 var connectionString = string.Format("Host={0}:{1};Username={2};Password={3};Database=dvdrental", postgresConfig.Host, postgresConfig.Port, postgresConfig.Username, postgresConfig.Password);
 
