@@ -24,11 +24,13 @@ public class MovieService
 		}
 	}
 
-	public async Task<List<ListMovie>> GetMovieList(string filter)
+	public async Task<List<ListMovie>> GetMovieList(string filter, int limit, int offset)
 	{
 		var conn = await dataSource.OpenConnectionAsync();
-		await using var cmd = new NpgsqlCommand("SELECT films.film_id as id, films.title, films.release_year, name as language FROM film as films INNER JOIN language as languages ON films.language_id = languages.language_id WHERE films.title LIKE ($1)", conn);
+		await using var cmd = new NpgsqlCommand("SELECT films.film_id as id, films.title, films.release_year, name as language FROM film as films INNER JOIN language as languages ON films.language_id = languages.language_id WHERE films.title LIKE ($1) LIMIT ($2) OFFSET ($3)", conn);
 		cmd.Parameters.AddWithValue(filter);
+		cmd.Parameters.AddWithValue(limit);
+		cmd.Parameters.AddWithValue(offset);
 		var reader = await cmd.ExecuteReaderAsync();
 		var result = new List<ListMovie>();
 		while (await reader.ReadAsync())

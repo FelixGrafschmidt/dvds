@@ -18,7 +18,7 @@ public class MovieController : ControllerBase
 	[Produces(MediaTypeNames.Application.Json)]
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<IActionResult> GetMovieList([FromQuery] string filter = "")
+	public async Task<IActionResult> GetMovieList([FromQuery] string filter = "", [FromQuery] int limit = 20, [FromQuery] int offset = 0)
 	{
 		if (filter == "")
 		{
@@ -28,7 +28,7 @@ public class MovieController : ControllerBase
 		{
 			filter = "%" + filter + "%";
 		}
-		var result = await _movieService.GetMovieList(filter);
+		var result = await _movieService.GetMovieList(filter, limit, offset);
 		if (result.Count == 0)
 		{
 			return NotFound();

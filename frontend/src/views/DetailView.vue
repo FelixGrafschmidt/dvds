@@ -27,7 +27,7 @@
 	const id = ref(parseInt(useRoute().params.id.toString()));
 
 	try {
-		const response = await fetch(import.meta.env.VITE_API_HOST + "/movie-details/" + id.value);
+		const response = await fetch(import.meta.env.VITE_API_HOST + "/movies/" + id.value);
 		movie.value = await response.json();
 	} catch (error) {
 		console.error(error);
